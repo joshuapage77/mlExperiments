@@ -1,0 +1,52 @@
+# Bytecode / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Jupyter notebook checkpoints (if added later)
+.ipynb_checkpoints/
+
+# Logs and metadata
+*.log
+*.sqlite3
+*.db
+
+# DVC and MLflow artifacts
+.dvc/
+.mlruns/
+mlruns/
+*.dvc
+
+# Model checkpoints
+*.pth
+checkpoints/
+
+# Data and cache
+data/
+.cache/
+*.zip
+*.tar.gz
+
+# OS / editor stuff
+.DS_Store
+Thumbs.db
+*.swp
+
+# Docker
+docker/minio_data/
+docker/mlruns/
+*.pid
+
+# VS Code
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# Environment
+.env
