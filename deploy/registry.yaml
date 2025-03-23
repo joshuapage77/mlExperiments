@@ -1,0 +1,6 @@
+url: ghcr.io
+namespace: yourusername
+image: handwritten-experiment
+tag: latest
+username: yourusername
+password_env_var: GHCR_TOKEN

@@ -8,10 +8,13 @@ services:
         reservations:
           devices:
             - driver: nvidia
-              capabilities: [gpu]
+              capabilities: [ gpu ]
     environment:
       NVIDIA_VISIBLE_DEVICES: all
       MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin
     volumes:
       - ../app:/app
     command: python3 src/train.py
@@ -32,7 +35,8 @@ services:
       AWS_ACCESS_KEY_ID: minioadmin
       AWS_SECRET_ACCESS_KEY: minioadmin
     volumes:
-      - ./mlruns:/mlflow/mlruns
+      - ../volumes/mlflow:/mlflow
+    command: mlflow server --backend-store-uri=sqlite:////mlflow/mlflow.db --default-artifact-root=s3://mlflow/ --host=0.0.0.0
     healthcheck:
       test: curl -f http://localhost:5000 || exit 1
       interval: 10s
@@ -45,7 +49,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
-      - minio_data:/data
+      - ../volumes/minio/data:/data
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
@@ -55,6 +59,18 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  # One-time setup container to ensure the 'mlflow' bucket exists in MinIO
+  minio-setup:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set local http://minio:9000 minioadmin minioadmin &&
+        mc mb local/mlflow || true
+      "
 
 volumes:
   minio_data: {}

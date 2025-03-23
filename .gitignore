@@ -17,6 +17,8 @@ venv/
 *.db
 
 # DVC and MLflow artifacts
+volumes/*
+!volumes/**/README.md
 .dvc/
 .mlruns/
 mlruns/
@@ -50,3 +52,17 @@ docker/mlruns/
 
 # Environment
 .env
+
+# Node modules
+deploy/node_modules/
+
+# Environment files
+deploy/.env
+
+# Logs
+deploy/npm-debug.log*
+deploy/yarn-debug.log*
+deploy/yarn-error.log*
+
+# Optional build artifacts or temp
+deploy/dist/

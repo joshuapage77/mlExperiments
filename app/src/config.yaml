@@ -1,0 +1,9 @@
+experiment:
+  name: handwritten-classifier
+
+model:
+  num_classes: 26
+
+training:
+  epochs: 6
+  lr: 0.001

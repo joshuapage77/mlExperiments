@@ -1,0 +1,8 @@
+cloudType: SECURE
+gpuTypeId: NVIDIA_H100
+containerDiskInGb: 10
+volumeInGb: 10
+minNumGpus: 1
+maxNumGpus: 1
+name: handwritten-deploy
+dockerArgs: "python3 /app/src/train.py"
