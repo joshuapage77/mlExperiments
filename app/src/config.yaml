@@ -1,5 +1,7 @@
 experiment:
   name: handwritten-classifier
+  model_name: handwritten-cnn
+  run_prefix: basic
 
 model:
   num_classes: 26

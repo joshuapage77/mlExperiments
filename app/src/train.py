@@ -5,6 +5,8 @@ import mlflow
 import mlflow.pytorch
 import yaml
 import os
+import mlflow.utils.mlflow_tags
+from utils.naming import generate_random_suffix
 
 from models.cnn import SimpleCNN
 from datasets.emnist_loader import get_emnist_dataloaders
@@ -55,6 +57,12 @@ def main():
 
    mlflow.set_experiment(config["experiment"]["name"])
    with mlflow.start_run() as run:
+      # Compose custom run name
+      custom_prefix = config["experiment"].get("run_prefix", "trial")
+      random_suffix = generate_random_suffix()
+      run_name = f"{custom_prefix}-{random_suffix}"
+
+      mlflow.set_tag(mlflow.utils.mlflow_tags.MLFLOW_RUN_NAME, run_name)
       mlflow.log_params({
          "num_classes": config["model"]["num_classes"],
          "learning_rate": config["training"]["lr"],
