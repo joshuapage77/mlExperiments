@@ -1,4 +1,4 @@
-experiment:
+project:
   name: handwritten-classifier
   model_name: handwritten-cnn
   run_prefix: basic

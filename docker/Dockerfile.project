@@ -1,6 +1,7 @@
+ARG PROJECT_NAME
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 
-WORKDIR /app
+WORKDIR /project
 
 RUN apt-get update && apt-get install -y \
     python3-pip \
@@ -8,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-COPY app/requirements.txt .
+COPY requirements.txt ./requirements.txt
 RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
+ENV PYTHONPATH="${PYTHONPATH}:/projects/common"
 
 CMD ["python3", "src/train.py"]

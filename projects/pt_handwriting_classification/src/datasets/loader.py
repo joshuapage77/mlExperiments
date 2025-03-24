@@ -7,7 +7,7 @@ class AdjustLabel(torch.nn.Module):
    def forward(self, x):
       return x - 1
 
-def get_emnist_dataloaders(batch_size=64, num_workers=2):
+def get_dataloaders(batch_size=64, num_workers=2):
    transform = transforms.Compose([
       transforms.ToTensor(),
       transforms.Normalize((0.1307,), (0.3081,))

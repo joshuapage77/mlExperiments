@@ -1,7 +1,9 @@
 #!/bin/bash
+cd ../docker || exit 1
 
-VERSION_ARG=$1
+source ./.env
 
-cd ../docker
-docker compose run --rm app python3 src/evaluate.py $VERSION_ARG
-cd ../scripts
+ACTIVE_PROJECT=${1:-$ACTIVE_PROJECT}
+docker compose run --rm project sh
+
+cd ../scripts || exit 1

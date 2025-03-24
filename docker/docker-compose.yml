@@ -1,9 +1,11 @@
 services:
-  app:
+  project:
     profiles: [ "manual" ]
     build:
-      context: ..
-      dockerfile: docker/Dockerfile.app
+      context: ../projects/${ACTIVE_PROJECT}
+      dockerfile: ../../docker/Dockerfile.project
+      args:
+        PROJECT_NAME: ${ACTIVE_PROJECT:-}
     deploy:
       resources:
         reservations:
@@ -17,7 +19,8 @@ services:
       AWS_ACCESS_KEY_ID: minioadmin
       AWS_SECRET_ACCESS_KEY: minioadmin
     volumes:
-      - ../app:/app
+      - ../projects/${ACTIVE_PROJECT}:/project
+      - ../common:/project/src/common
     command: python3 src/train.py
     depends_on:
       mlflow:
