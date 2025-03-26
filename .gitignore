@@ -29,6 +29,7 @@ mlruns/
 checkpoints/
 
 # Data and cache
+ephemeral/
 data/
 .cache/
 *.zip

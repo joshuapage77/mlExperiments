@@ -7,3 +7,6 @@ pytest
 torchvision
 numpy
 PyYAML
+optuna
+hydra-optuna-sweeper
+psutil>=5.9.0

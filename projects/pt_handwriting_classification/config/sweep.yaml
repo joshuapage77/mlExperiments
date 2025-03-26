@@ -1,0 +1,13 @@
+hydra:
+  sweeper:
+    _target_: hydra_plugins.hydra_optuna_sweeper.optuna_sweeper.OptunaSweeper
+    sampler:
+      _target_: optuna.samplers.TPESampler
+    direction: maximize
+    study_name: ${project.run_prefix}
+    n_trials: 20
+    params:
+      train.lr: interval(0.0001, 0.01)
+      train.epochs: range(5, 20)
+      train.num_workers: range(2, 8)
+      train.batch_size: range(64, 256)

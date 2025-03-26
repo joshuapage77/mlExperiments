@@ -1,9 +1,0 @@
-torch
-mlflow
-dvc[s3]
-boto3
-ruff
-pytest
-torchvision
-numpy
-PyYAML

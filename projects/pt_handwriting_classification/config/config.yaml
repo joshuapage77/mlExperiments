@@ -1,0 +1,30 @@
+defaults:
+  - sweep
+  - override hydra/sweeper: optuna
+  - _self_
+
+project:
+  name: handwritten-classifier
+  run_prefix: base
+
+data:
+  path: ./ephemeral/data/
+  num_classes: 26
+
+models:
+  default:
+    name: handwritten-cnn
+    class_path: models.model_def.ProjectModel
+
+train:
+  lr: 0.001
+  batch_size: 64
+  num_workers: 4
+  epochs: 5
+  model: default
+
+hydra:
+  run:
+    dir: ./ephemeral/singlerun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ./ephemeral/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}

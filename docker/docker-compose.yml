@@ -18,6 +18,7 @@ services:
       MLFLOW_S3_ENDPOINT_URL: http://minio:9000
       AWS_ACCESS_KEY_ID: minioadmin
       AWS_SECRET_ACCESS_KEY: minioadmin
+      PYTHONPATH: /project/src:/project
     volumes:
       - ../projects/${ACTIVE_PROJECT}:/project
       - ../common:/project/src/common
@@ -35,7 +36,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      MLFLOW_ARTIFACT_URI: s3://mlflow/
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
       AWS_ACCESS_KEY_ID: minioadmin
       AWS_SECRET_ACCESS_KEY: minioadmin
     volumes:
