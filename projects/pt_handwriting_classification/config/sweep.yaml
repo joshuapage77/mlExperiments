@@ -9,5 +9,4 @@ hydra:
     params:
       train.lr: interval(0.0001, 0.01)
       train.epochs: range(5, 20)
-      train.num_workers: range(2, 8)
       train.batch_size: range(64, 256)

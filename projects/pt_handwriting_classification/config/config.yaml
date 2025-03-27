@@ -19,7 +19,7 @@ models:
 train:
   lr: 0.001
   batch_size: 64
-  num_workers: 4
+  num_workers: 8
   epochs: 5
   model: default
 
