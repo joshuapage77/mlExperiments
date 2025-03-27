@@ -55,7 +55,7 @@ docker/mlruns/
 .env
 
 # Node modules
-deploy/node_modules/
+node_modules/
 
 # Environment files
 deploy/.env
