@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import torch
 import mlflow.models
 
-class ProjectModel(nn.Module):
+class BaselineModel(nn.Module):
     def __init__(self, num_classes=26):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)   # 28x28 → 28x28
@@ -21,9 +21,4 @@ class ProjectModel(nn.Module):
         x = x.view(x.size(0), -1)  # flatten
         x = F.relu(self.fc1(x))
         return self.fc2(x)
-    
-    def get_signature(self, input_example):
-        input_example = input_example.to(next(self.parameters()).device)
-        with torch.no_grad():
-            output = self(input_example)
-        return mlflow.models.infer_signature(input_example.cpu().numpy(), output.cpu().numpy())
+

@@ -7,6 +7,7 @@ from datasets.loader import get_dataloaders, get_input_example
 from common.utils.config import load_config
 from common.utils.instantiate import get_class_from_string
 from common.utils.perf import log_system_metrics, log_gpu_metrics
+from common.utils.model import get_signature
 
 def evaluate_model(model, test_loader, device):
    model.eval()
@@ -54,7 +55,7 @@ def train(cfg):
          print(f"Epoch {epoch}: loss={loss:.4f}, accuracy={acc:.4f}")
 
    input_example = get_input_example()
-   signature = model.get_signature(input_example)
+   signature = get_signature(model, input_example)
    mlflow.pytorch.log_model(model, "model", input_example=input_example.cpu().numpy(), signature=signature)
    return model, acc
 

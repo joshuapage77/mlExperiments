@@ -3,6 +3,9 @@ defaults:
   - override hydra/sweeper: optuna
   - _self_
 
+git:
+  commit: ${oc.env:GIT_COMMIT}
+
 project:
   name: handwritten-classifier
   run_prefix: base
@@ -12,16 +15,16 @@ data:
   num_classes: 26
 
 models:
-  default:
-    name: handwritten-cnn
-    class_path: models.model_def.ProjectModel
+  baseline:
+    name: handwritten-cnn-baseline
+    class_path: models.baseline_model.BaselineModel
 
 train:
   lr: 0.001
   batch_size: 64
   num_workers: 8
   epochs: 5
-  model: default
+  model: baseline
 
 hydra:
   run:

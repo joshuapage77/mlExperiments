@@ -16,6 +16,7 @@ class MLflowRunContext:
       self.run_mode = run_mode
       self.run_name = assemble_run_name(cfg.project.run_prefix, self.run_mode, self.session_name, self.suffix)
       self.metric = None
+      self.model_name = None
 
    def __enter__(self):
       mlflow.set_experiment(self.cfg.project.name)
@@ -33,13 +34,20 @@ class MLflowRunContext:
          for key, value in self.cfg.train.items():
             mlflow.log_param(key, value)
 
+      commit = self.cfg.git.commit
+      mlflow.set_tag("git.commit", commit)
+   
+      self.model_name = f"{self.cfg.models[self.cfg.train.model].name}-{commit[:7]}"
+      print(f"Model Name: {self.model_name}")
+      mlflow.set_tag("model.name", self.model_name)
+
       return self.run
 
    def __exit__(self, exc_type, exc_val, exc_tb):      
       log_model(self.model)
       mlflow.register_model(
          model_uri=f"runs:/{self.run.info.run_id}/model",
-         name=self.cfg.models[self.cfg.train.model].name
+         name=self.model_name
       )
       
       mlflow.end_run()
