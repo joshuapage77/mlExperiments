@@ -4,7 +4,7 @@ import torch
 import mlflow.models
 
 class BaselineModel(nn.Module):
-    def __init__(self, num_classes=26):
+    def __init__(self, num_classes=26, **ignore_the_rest):
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3, padding=1)   # 28x28 → 28x28
         self.pool1 = nn.MaxPool2d(2, 2)                            # 28x28 → 14x14

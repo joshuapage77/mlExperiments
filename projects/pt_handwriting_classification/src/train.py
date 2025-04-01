@@ -40,7 +40,7 @@ def train(cfg):
    train_loader, test_loader = get_dataloaders(cfg.data.path, cfg.train.batch_size, cfg.train.num_workers)
 
    model_class = get_class_from_string(cfg.models[cfg.train.model].class_path)
-   model = model_class(num_classes=cfg.data.num_classes).to(device)
+   model = model_class(cfg.data.num_classes, cfg.train.num_hidden_layers, cfg.train.channels, cfg.train.downsample, cfg.train.activation, cfg.train.fc_activation, cfg.train.fc_units, cfg.train.use_fc_dropout, cfg.train.input_shape).to(device)
    criterion = nn.CrossEntropyLoss()
    optimizer = optim.Adam(model.parameters(), lr=cfg.train.lr)
 
