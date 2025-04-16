@@ -3,6 +3,9 @@ defaults:
   - override hydra/sweeper: optuna
   - _self_
 
+git:
+  commit: ${oc.env:GIT_COMMIT}
+
 project:
   name: handwritten-classifier
   run_prefix: base
@@ -12,16 +15,29 @@ data:
   num_classes: 26
 
 models:
-  default:
-    name: handwritten-cnn
-    class_path: models.model_def.ProjectModel
+  baseline:
+    name: handwritten-cnn-baseline
+    class_path: models.baseline_model.BaselineModel
+  dynamic:
+    name: handwritten-cnn-dynamic
+    class_path: models.dynamic_model.DynamicModel
 
 train:
   lr: 0.001
   batch_size: 64
   num_workers: 8
-  epochs: 5
-  model: default
+  epochs: 15
+  model: dynamic
+  # Dynamic model creation
+  input_shape: [1, 28, 28]
+  num_hidden_layers: 3           # Number of conv blocks (conv + downsample)
+  channels: [32, 64]        # Number of output channels per conv (will reuse second to last)
+  downsample: [pool, None, strided]     # Whether to use pooling for each downsampling layer
+  activation: [relu]              # Activation type
+  fc_activation: relu
+  fc_units: [256]                # Fully connected hidden layer sizes (defines number also based on array length)
+  use_fc_dropout: True
+
 
 hydra:
   run:
